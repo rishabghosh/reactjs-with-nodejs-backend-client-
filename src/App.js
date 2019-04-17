@@ -8,9 +8,28 @@ import "./App.css";
  * and get the data then it will update the state and the page rerenders
  */
 
-const formatTitles = function(movieTitles) {
+const extractTitles = function(movieTitles) {
   const titles = movieTitles.map(movieTitle => movieTitle.title);
-  return titles.join("|");
+  return titles;
+};
+
+const genTable = function(elements) {
+  return elements.map(element => (
+    <tr>
+      <th>{element}</th>
+    </tr>
+  ));
+};
+
+const MovieTitleTable = function(props) {
+  return (
+    <table>
+      <tr>
+        <th>Titles</th>
+      </tr>
+      {genTable(props.titles)}
+    </table>
+  );
 };
 
 const App = function() {
@@ -21,7 +40,10 @@ const App = function() {
     fetch("/getTitles")
       .then(res => res.text())
       .then(jsonData => JSON.parse(jsonData))
-      .then(data => setTitles(formatTitles(data)));
+      .then(data => {
+        const titles = extractTitles(data);
+        setTitles(titles);
+      });
   }, []);
 
   useEffect(() => {
@@ -33,7 +55,7 @@ const App = function() {
   return (
     <div className="App">
       <div>{data}</div>
-      <div>{titles}</div>
+      <MovieTitleTable titles={titles} />
     </div>
   );
 };
