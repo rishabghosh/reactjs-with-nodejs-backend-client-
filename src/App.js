@@ -29,8 +29,8 @@ const App = function() {
 
   return (
     <div className="App">
-      {/* <div>{data}</div> */}
-      <div>{"hi how are you"}</div>
+      <div>{data}</div>
+      <div>{titles}</div>
     </div>
   );
 };
