@@ -18,7 +18,7 @@ const App = function() {
     fetch("/getTitles")
       .then(res => res.text())
       .then(jsonData => setTitles(jsonData));
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     fetch("/home")
