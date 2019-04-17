@@ -14,11 +14,15 @@ const extractTitles = function(movieTitles) {
 };
 
 const genTable = function(elements) {
-  return elements.map(element => (
-    <tr>
-      <th>{element}</th>
-    </tr>
-  ));
+  const result = [];
+  for (let index = 0; index < elements.length; index++) {
+    result.push(
+      <tr>
+        <th>{elements[index]}</th>
+      </tr>
+    );
+  }
+  return result;
 };
 
 const MovieTitleTable = function(props) {
