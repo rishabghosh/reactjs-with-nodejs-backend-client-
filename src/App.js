@@ -8,7 +8,10 @@ import "./App.css";
  * and get the data then it will update the state and the page rerenders
  */
 
-const formatTitles = function(titles) {};
+const formatTitles = function(movieTitles) {
+  const titles = movieTitles.map(movieTitle => movieTitle.title);
+  return titles.join("|");
+};
 
 const App = function() {
   const [data, setData] = useState("");
@@ -17,7 +20,8 @@ const App = function() {
   useEffect(() => {
     fetch("/getTitles")
       .then(res => res.text())
-      .then(jsonData => setTitles(jsonData));
+      .then(jsonData => JSON.parse(jsonData))
+      .then(data => setTitles(formatTitles(data)));
   }, []);
 
   useEffect(() => {
