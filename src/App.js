@@ -8,8 +8,18 @@ import "./App.css";
  * and get the data then it will update the state and the page rerenders
  */
 
+const formatTitles = function(titles) {};
+
 const App = function() {
   const [data, setData] = useState("");
+  const [titles, setTitles] = useState([]);
+
+  useEffect(() => {
+    console.log("hi")
+    fetch("/getTitles")
+      .then(res => res.json())
+      .then(jsonData => setTitles(jsonData));
+  }, [data]);
 
   useEffect(() => {
     fetch("/home")
@@ -17,7 +27,12 @@ const App = function() {
       .then(jsonData => setData(jsonData.data));
   }, []);
 
-  return <div className="App">{data}</div>;
+  return (
+    <div className="App">
+      {/* <div>{data}</div> */}
+      <div>{"hi how are you"}</div>
+    </div>
+  );
 };
 
 export default App;
