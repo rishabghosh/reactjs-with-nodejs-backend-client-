@@ -12,12 +12,11 @@ const formatTitles = function(titles) {};
 
 const App = function() {
   const [data, setData] = useState("");
-  const [titles, setTitles] = useState([]);
+  const [titles, setTitles] = useState("");
 
   useEffect(() => {
-    console.log("hi")
     fetch("/getTitles")
-      .then(res => res.json())
+      .then(res => res.text())
       .then(jsonData => setTitles(jsonData));
   }, [data]);
 
