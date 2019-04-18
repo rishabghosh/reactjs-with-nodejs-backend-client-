@@ -27,18 +27,51 @@ const genTable = function(elements) {
 
 const MovieTitleTable = function(props) {
   return (
-    <table>
-      <tr>
-        <th>Titles</th>
-      </tr>
-      {genTable(props.titles)}
-    </table>
+    <div>
+      <table>
+        <tr>
+          <th>Titles</th>
+        </tr>
+        {genTable(props.titles)}
+      </table>
+    </div>
+  );
+};
+
+const addTitle = function(title, list) {
+  const result = [...list];
+  result.push(title);
+  return result;
+};
+
+const InputMovie = function(props) {
+  const [title, setTitle] = useState("");
+
+  const handleChange = function(event) {
+    setTitle(event.target.value);
+  };
+
+  const addMovie = function() {
+    if (title) {
+      console.log(title);
+      fetch("/addTitle", {
+        method: "POST",
+        body: title
+      });
+      props.setTitles(addTitle(title, props.titles));
+    }
+  };
+
+  return (
+    <div>
+      <textarea onChange={handleChange} />
+      <button onClick={addMovie}>add movie</button>
+    </div>
   );
 };
 
 const App = function() {
-  const [data, setData] = useState("");
-  const [titles, setTitles] = useState("");
+  const [titles, setTitles] = useState([]);
 
   useEffect(() => {
     fetch("/getTitles")
@@ -50,16 +83,10 @@ const App = function() {
       });
   }, []);
 
-  useEffect(() => {
-    fetch("/home")
-      .then(res => res.json())
-      .then(jsonData => setData(jsonData.data));
-  }, []);
-
   return (
     <div className="App">
-      <div>{data}</div>
-      <MovieTitleTable titles={titles} />
+      <MovieTitleTable titles={[...titles]} />
+      <InputMovie setTitles={setTitles} titles={[...titles]} />
     </div>
   );
 };

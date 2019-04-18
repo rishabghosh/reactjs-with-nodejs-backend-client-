@@ -1,11 +1,14 @@
 .App {
   text-align: center;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
+
 }
 
 table{
   border: 1px solid black;
+  width: 400px;
 }
 
 th {
